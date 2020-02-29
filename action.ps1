@@ -98,12 +98,14 @@ if ($stateGist) {
 if (-not $stateData) {
     Write-ActionWarning "BuildNum state for Repo not found, INITIALIZING"
     $stateData = [GlobalBuildNum]::new()
+    $skip_bump = 'TRUE'
 }
 
 ## Create initial state data for current workflow if it doesn't exist
 if (-not $stateData.workflow_buildnums.ContainsKey($workflow_name)) {
     Write-ActionDebug "BuildNum state for Workflow not found, initializing"
     $stateData.workflow_buildnums[$workflow_name] = [WorkflowBuildNum]::new()
+    $skip_bump = 'TRUE'
 }
 
 ## Create initial state data for specified version key if it doesn't exist
@@ -112,6 +114,7 @@ if ($version_key -and (-not $stateData.workflow_buildnums[
     Write-ActionDebug "BuildNum state for Version not found, initializing"
     $stateData.workflow_buildnums[$workflow_name].version_buildnums[$version_key] =
         [VersionBuildNum]::new()
+    $skip_bump = 'TRUE'
 }
 
 if (-not $stateGist) {
@@ -129,6 +132,7 @@ $($stateData | ConvertTo-Json -Depth 10)
     } | ConvertTo-Json)
     $createGist = $createGistResp.Content | ConvertFrom-Json -AsHashtable
     $stateGist = $createGist
+    $skip_bump = 'TRUE'
 }
 
 Write-ActionDebug "Resolved starting state data:"
