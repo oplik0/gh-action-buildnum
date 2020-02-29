@@ -1,6 +1,7 @@
 # gh-action-buildnum
 GitHub Action to implement build numbers in Workflows.
 
+**This fork was created only because I didn't want to increment the version with the first run - so that something like 1.0 works without me having to substract 1 in my own code, since it seems more elegant this way**
 ---
 
 [![GitHub WorkFlow - test-action](https://github.com/zyborg/gh-action-buildnum/workflows/test-action/badge.svg)](https://github.com/zyborg/gh-action-buildnum/actions?workflow=test-action)
